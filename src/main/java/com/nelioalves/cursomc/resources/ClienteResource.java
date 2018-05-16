@@ -30,7 +30,7 @@ public class ClienteResource {
 	}
 
 	
-	@RequestMapping(method=RequestMethod.GET)
+	@RequestMapping(value = "/", method=RequestMethod.GET)
 	public List<Cliente> listar() {
 		return repository.findAll();
 	}

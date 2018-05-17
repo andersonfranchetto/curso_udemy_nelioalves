@@ -1,6 +1,6 @@
 package com.nelioalves.cursomc.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,7 +17,7 @@ public class Estado implements Serializable {
     private Integer id;
     private String nome;
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy = "estado") //MAPEAMENTO REVERSO, JA FOI MAPEADO PELO ESTADO ENTÃO BASTA USAR DESSA FORMA
     private List<Cidade> cidades = new ArrayList<>();
 

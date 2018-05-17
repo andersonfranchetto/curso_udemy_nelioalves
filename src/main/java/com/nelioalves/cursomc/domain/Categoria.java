@@ -18,7 +18,6 @@ public class Categoria implements Serializable {
 	private Integer id;
 	private String nome;
 
-	@JsonManagedReference //ANOTA-SE DO LADO NA QUAL DEVE BUSCAR OS OBJETOS REFERENCIADOS
 	@ManyToMany(mappedBy = "categorias")
 	List<Produto> produtos = new ArrayList<>();
 

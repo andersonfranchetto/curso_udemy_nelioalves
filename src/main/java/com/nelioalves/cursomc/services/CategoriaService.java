@@ -20,4 +20,8 @@ public class CategoriaService {
         }
         return categoria;
     }
+
+    public Categoria insert(Categoria categoria){
+        return repository.save(categoria);
+    }
 }

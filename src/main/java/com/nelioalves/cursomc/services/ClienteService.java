@@ -12,7 +12,7 @@ public class ClienteService {
     @Autowired
     ClienteRepository repository;
 
-    public Cliente buscar(Integer id){
+    public Cliente find(Integer id){
         Cliente cliente = repository.findOne(id);
         if(cliente == null){
             throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id

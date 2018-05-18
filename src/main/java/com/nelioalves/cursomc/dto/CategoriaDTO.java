@@ -18,8 +18,8 @@ public class CategoriaDTO implements Serializable {
     public CategoriaDTO(){}
 
     public CategoriaDTO(Categoria categoria){
-        id = categoria.getId();
-        nome = categoria.getNome();
+        this.id = categoria.getId();
+        this.nome = categoria.getNome();
     }
 
     public Integer getId() {

@@ -2,6 +2,9 @@ package com.nelioalves.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nelioalves.cursomc.domain.enums.TipoCliente;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,7 +23,9 @@ public class Cliente implements Serializable {
     private Integer id;
     private String nome;
     private String email;
+    @Column(updatable = false)
     private String cpfOuCnpj;
+    @Column(updatable = false)
     private Integer tipoCliente;
 
     @OneToMany(mappedBy = "cliente")
@@ -41,7 +46,7 @@ public class Cliente implements Serializable {
         this.nome = nome;
         this.email = email;
         this.cpfOuCnpj = cpfOuCnpj;
-        this.tipoCliente = tipoCliente.getCodigo();
+        this.tipoCliente = (tipoCliente==null) ? null : tipoCliente.getCodigo();
     }
 
     public Integer getId() {

@@ -1,6 +1,8 @@
 package com.nelioalves.cursomc.services;
 
 import com.nelioalves.cursomc.domain.Cliente;
+import com.nelioalves.cursomc.domain.Endereco;
+import com.nelioalves.cursomc.domain.enums.TipoCliente;
 import com.nelioalves.cursomc.dto.ClienteDTO;
 import com.nelioalves.cursomc.repositories.ClienteRepository;
 import com.nelioalves.cursomc.services.exceptions.DataIntegrityException;
@@ -20,6 +22,9 @@ public class ClienteService {
     @Autowired
     ClienteRepository repository;
 
+    @Autowired
+    EnderecoService enderecoService;
+
     public Cliente find(Integer id){
         Cliente cliente = repository.findOne(id);
         if(cliente == null){
@@ -30,7 +35,12 @@ public class ClienteService {
     }
 
     public Cliente insert(Cliente cliente){
-        return repository.save(cliente);
+        Cliente newCliente = repository.save(cliente);
+        for(Endereco newEndereco : cliente.getEnderecos()){
+            newEndereco.setCliente(cliente);
+            enderecoService.insert(newEndereco);
+        }
+        return newCliente;
     }
 
     public Cliente update(Cliente cliente){
@@ -57,6 +67,9 @@ public class ClienteService {
     }
 
     public Cliente fromDTO(ClienteDTO clienteDTO){
-        return new Cliente(clienteDTO.getId(), clienteDTO.getNome(), clienteDTO.getEmail(), null, null);
+        Cliente cliente = new Cliente(clienteDTO.getId(), clienteDTO.getNome(), clienteDTO.getEmail(), clienteDTO.getCpfOuCnpj(), TipoCliente.toEnum(clienteDTO.getTipo()));
+        cliente.getEnderecos().addAll(clienteDTO.getEnderecos());
+        cliente.getTelefones().addAll(clienteDTO.getTelefones());
+        return cliente;
     }
 }

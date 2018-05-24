@@ -83,7 +83,6 @@ public class CursomcApplication implements CommandLineRunner {
 
 		Endereco end1 = new Endereco(null, "Rua Flores", "300", "Apto 3", "Jardim", "38383838", cli1, cid2);
 		Endereco end2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38383838", cli1, cid1);
-
 		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");

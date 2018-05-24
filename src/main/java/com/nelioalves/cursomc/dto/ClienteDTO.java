@@ -1,9 +1,15 @@
 package com.nelioalves.cursomc.dto;
 
 import com.nelioalves.cursomc.domain.Cliente;
+import com.nelioalves.cursomc.domain.Endereco;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class ClienteDTO {
 
@@ -15,12 +21,22 @@ public class ClienteDTO {
     @Email(message = "Email inválido")
     private String email;
 
+    private String cpfOuCnpj;
+    private Integer tipo;
+
+    private List<Endereco> enderecos = new ArrayList<>();
+    private Set<String> telefones = new HashSet<>();
+
     public ClienteDTO(){}
 
     public ClienteDTO(Cliente cliente){
         this.id = cliente.getId();
         this.nome = cliente.getNome();
         this.email = cliente.getEmail();
+        this.cpfOuCnpj = cliente.getCpfOuCnpj();
+        this.tipo = (cliente.getTipoCliente()==null) ? null : cliente.getTipoCliente();
+        this.enderecos = cliente.getEnderecos();
+        this.telefones = cliente.getTelefones();
     }
 
     public Integer getId() {
@@ -43,7 +59,39 @@ public class ClienteDTO {
         return email;
     }
 
+    public String getCpfOuCnpj() {
+        return cpfOuCnpj;
+    }
+
+    public void setCpfOuCnpj(String cpfOuCnpj) {
+        this.cpfOuCnpj = cpfOuCnpj;
+    }
+
+    public Integer getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Integer tipo) {
+        this.tipo = tipo;
+    }
+
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Endereco> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
+    }
+
+    public Set<String> getTelefones() {
+        return telefones;
+    }
+
+    public void setTelefones(Set<String> telefones) {
+        this.telefones = telefones;
     }
 }

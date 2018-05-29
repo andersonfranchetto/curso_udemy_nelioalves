@@ -72,4 +72,8 @@ public class ClienteService {
         cliente.getTelefones().addAll(clienteDTO.getTelefones());
         return cliente;
     }
+
+    public Cliente findByEmail(String email){
+        return repository.findByEmail(email);
+    }
 }

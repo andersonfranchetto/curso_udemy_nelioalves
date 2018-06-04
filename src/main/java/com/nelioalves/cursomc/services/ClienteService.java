@@ -35,17 +35,12 @@ public class ClienteService {
     }
 
     public Cliente insert(Cliente cliente){
-        Cliente newCliente = repository.save(cliente);
-        for(Endereco newEndereco : cliente.getEnderecos()){
-            newEndereco.setCliente(cliente);
-            enderecoService.insert(newEndereco);
-        }
-        return newCliente;
+        return this.merge(cliente);
     }
 
     public Cliente update(Cliente cliente){
         find(cliente.getId());//VERIFICA SE ID EXISTE.
-        return repository.save(cliente);
+        return this.merge(cliente);
     }
 
     public void delete(Integer id){
@@ -75,5 +70,14 @@ public class ClienteService {
 
     public Cliente findByEmail(String email){
         return repository.findByEmail(email);
+    }
+
+    public Cliente merge(Cliente cliente){
+        Cliente newCliente = repository.save(cliente);
+        for(Endereco newEndereco : cliente.getEnderecos()){
+            newEndereco.setCliente(cliente);
+            enderecoService.insert(newEndereco);
+        }
+        return newCliente;
     }
 }

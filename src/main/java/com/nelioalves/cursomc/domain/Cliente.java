@@ -114,6 +114,11 @@ public class Cliente implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "Cliente{" + "id=" + id + ", nome='" + nome + '\'' + ", email='" + email + '\'' + ", cpfOuCnpj='" + cpfOuCnpj + '\'' + ", tipoCliente=" + tipoCliente + ", telefones=" + telefones + ", pedidos=" + pedidos + '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

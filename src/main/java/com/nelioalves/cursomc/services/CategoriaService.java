@@ -29,6 +29,10 @@ public class CategoriaService {
         return categoria;
     }
 
+    public List<Categoria> findAll(List<Integer> ids){
+        return repository.findAll(ids);
+    }
+
     public Categoria insert(Categoria categoria){
         return repository.save(categoria);
     }

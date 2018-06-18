@@ -19,6 +19,7 @@ public class Produto implements Serializable {
     private Integer id;
     private String nome;
     private Double preco;
+
     @JsonIgnore //OU SEJA, DO OUTRO LADO JA BUSCOU AS REFERENCIAS, DESTE LADO NÃO PRECISA MAIS
     @ManyToMany
     @JoinTable(

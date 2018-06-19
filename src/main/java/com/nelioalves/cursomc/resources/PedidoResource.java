@@ -30,7 +30,6 @@ public class PedidoResource {
 
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody Pedido pedido){
-		System.out.println(pedido.getItens());
 		pedido = service.insert(pedido);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(pedido.getId()).toUri();
 		return ResponseEntity.created(uri).build();

@@ -7,6 +7,7 @@ import com.nelioalves.cursomc.domain.Pedido;
 import com.nelioalves.cursomc.domain.enums.EstadoPagamento;
 import com.nelioalves.cursomc.repositories.PedidoRepository;
 import com.nelioalves.cursomc.services.exceptions.ObjectNotFoundException;
+import com.nelioalves.cursomc.services.interfaces.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +32,9 @@ public class PedidoService {
 
     @Autowired
     ClienteService clienteService;
+
+    @Autowired
+    EmailService emailService;
 
     public Pedido find(Integer id){
         Pedido pedido = repository.findOne(id);
@@ -68,6 +72,7 @@ public class PedidoService {
             item.setPedido(pedido);
         };
         itemPedidoService.insert(pedido.getItens());
+        emailService.sendOrderConfirmationEmail(pedido);
         return pedido;
     }
 }

@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 @Entity
 public class ItemPedido implements Serializable {
@@ -32,7 +34,7 @@ public class ItemPedido implements Serializable {
     }
 
     public Double getSubtotalPedido(){
-        return (preco - desconto) * quantidade;
+        return (this.preco - this.desconto) * this.quantidade;
     }
 
     @JsonIgnore
@@ -83,5 +85,45 @@ public class ItemPedido implements Serializable {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    @Override
+    public String toString() {
+        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+        StringBuilder builder = new StringBuilder();
+        builder.append(getProduto().getNome());
+        builder.append(", Qte: ");
+        builder.append(getQuantidade());
+        builder.append(", Preço unitário: ");
+        builder.append(nf.format(getPreco() == null ? 0.0 : getPreco()));
+        builder.append(", Subtotal: ");
+        builder.append(nf.format(getSubtotalPedido() == null ? 0.0 : getSubtotalPedido()));
+        builder.append("\n");
+        return builder.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ItemPedido other = (ItemPedido) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
     }
 }

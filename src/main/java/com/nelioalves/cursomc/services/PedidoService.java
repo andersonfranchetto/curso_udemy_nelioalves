@@ -38,6 +38,7 @@ public class PedidoService {
             throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id
                     + ", Tipo: " + Pedido.class.getName());
         }
+        System.out.println(pedido);
         return pedido;
     }
 
@@ -58,8 +59,6 @@ public class PedidoService {
 
         pedido = repository.save(pedido);
 
-        System.out.println(pedido.getItens());
-
         pagamentoService.insert(pedido.getPagamento());
 
         for(ItemPedido item : pedido.getItens()) {
@@ -68,9 +67,7 @@ public class PedidoService {
             item.setPreco(item.getProduto().getPreco());
             item.setPedido(pedido);
         };
-
         itemPedidoService.insert(pedido.getItens());
-
         return pedido;
     }
 }

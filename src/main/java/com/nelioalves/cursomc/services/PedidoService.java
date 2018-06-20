@@ -1,7 +1,6 @@
 package com.nelioalves.cursomc.services;
 
 import com.nelioalves.cursomc.domain.ItemPedido;
-import com.nelioalves.cursomc.domain.Pagamento;
 import com.nelioalves.cursomc.domain.PagamentoComBoleto;
 import com.nelioalves.cursomc.domain.Pedido;
 import com.nelioalves.cursomc.domain.enums.EstadoPagamento;
@@ -47,7 +46,7 @@ public class PedidoService {
     }
 
     @Transactional
-    public Pedido insert(Pedido pedido){
+    public Pedido insert(Pedido pedido) {
         pedido.setId(null);
         pedido.setInstante(new Date());
         pedido.setCliente(clienteService.find(pedido.getCliente().getId()));
@@ -72,7 +71,7 @@ public class PedidoService {
             item.setPedido(pedido);
         };
         itemPedidoService.insert(pedido.getItens());
-        emailService.sendOrderConfirmationEmail(pedido);
+        emailService.sendOrderConfirmationHtmlEmail(pedido);
         return pedido;
     }
 }

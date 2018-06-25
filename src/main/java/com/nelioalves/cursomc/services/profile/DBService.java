@@ -2,6 +2,7 @@ package com.nelioalves.cursomc.services.profile;
 
 import com.nelioalves.cursomc.domain.*;
 import com.nelioalves.cursomc.domain.enums.EstadoPagamento;
+import com.nelioalves.cursomc.domain.enums.PerfilCliente;
 import com.nelioalves.cursomc.domain.enums.TipoCliente;
 import com.nelioalves.cursomc.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,12 +99,17 @@ public class DBService {
         est1.getCidades().addAll(Arrays.asList(cid1, cid3));
 
         Cliente cli1 = new Cliente(null, "Maria Silva", "anderson.franchetto@gmail.com", "555656565", TipoCliente.PESSOAFISICA, bCryptPasswordEncoder.encode("123"));
+        Cliente cli2 = new Cliente(null, "João Silva", "anderson.benatti@gmail.com", "556448845", TipoCliente.PESSOAFISICA, bCryptPasswordEncoder.encode("123"));
 
         cli1.getTelefones().addAll(Arrays.asList("33332222", "22223333"));
+        cli2.getTelefones().addAll(Arrays.asList("34432222", "25523333"));
+        cli2.addPerfil(PerfilCliente.ADMIN);
 
         Endereco end1 = new Endereco(null, "Rua Flores", "300", "Apto 3", "Jardim", "38383838", cli1, cid2);
         Endereco end2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38383838", cli1, cid1);
+        Endereco end3 = new Endereco(null, "Avenida Matos", "1875", "", "Centro", "38383838", cli2, cid1);
         cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
+        cli1.getEnderecos().addAll(Arrays.asList(end3));
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, end1);
@@ -122,8 +128,8 @@ public class DBService {
         estadoRepository.save(Arrays.asList(est1, est2));
         cidadeRepository.save(Arrays.asList(cid1, cid2, cid3));
 
-        clienteRepository.save(Arrays.asList(cli1));
-        enderecoRepository.save(Arrays.asList(end1, end2));
+        clienteRepository.save(Arrays.asList(cli1, cli2));
+        enderecoRepository.save(Arrays.asList(end1, end2, end3));
 
         pedidoRepository.save(Arrays.asList(ped1, ped2));
         pagamentoRepository.save(Arrays.asList(pag1, pag2));

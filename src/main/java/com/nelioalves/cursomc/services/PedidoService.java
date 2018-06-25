@@ -8,6 +8,7 @@ import com.nelioalves.cursomc.repositories.PedidoRepository;
 import com.nelioalves.cursomc.services.exceptions.ObjectNotFoundException;
 import com.nelioalves.cursomc.services.interfaces.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,23 +18,26 @@ import java.util.Date;
 @Service
 public class PedidoService {
 
-    @Autowired
-    PedidoRepository repository;
+    @Value("${spring.profiles.active}")
+    private String perfilAtivo;
 
     @Autowired
-    PagamentoService pagamentoService;
+    private PedidoRepository repository;
 
     @Autowired
-    ProdutoService produtoService;
+    private PagamentoService pagamentoService;
 
     @Autowired
-    ItemPedidoService itemPedidoService;
+    private ProdutoService produtoService;
 
     @Autowired
-    ClienteService clienteService;
+    private ItemPedidoService itemPedidoService;
 
     @Autowired
-    EmailService emailService;
+    private ClienteService clienteService;
+
+    @Autowired
+    private EmailService emailService;
 
     public Pedido find(Integer id){
         Pedido pedido = repository.findOne(id);
@@ -71,7 +75,15 @@ public class PedidoService {
             item.setPedido(pedido);
         };
         itemPedidoService.insert(pedido.getItens());
-        emailService.sendOrderConfirmationHtmlEmail(pedido);
+
+        switch (perfilAtivo){
+            case "test" :
+                emailService.sendOrderConfirmationEmail(pedido);
+                break;
+            default:
+                emailService.sendOrderConfirmationHtmlEmail(pedido);
+        }
+
         return pedido;
     }
 }

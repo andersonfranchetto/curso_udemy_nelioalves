@@ -15,7 +15,7 @@ import java.text.ParseException;
 public class TestConfig {
 
     @Autowired
-    DBService dbService;
+    private DBService dbService;
 
     @Bean
     public boolean instantiateDatabase() throws ParseException {
@@ -24,7 +24,7 @@ public class TestConfig {
     }
 
     @Bean
-    public EmailService emailService(){
+    public EmailService emailService() {
         return new MockEmailService();
     }
 }

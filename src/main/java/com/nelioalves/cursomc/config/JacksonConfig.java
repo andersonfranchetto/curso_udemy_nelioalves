@@ -17,7 +17,7 @@ public class JacksonConfig {
                 objectMapper.registerSubtypes(PagamentoComCartao.class);
                 objectMapper.registerSubtypes(PagamentoComBoleto.class);
                 super.configure(objectMapper);
-            };
+            }
         };
         return builder;
     }

@@ -1,9 +1,10 @@
 package com.nelioalves.cursomc.services.interfaces;
 
-import com.nelioalves.cursomc.domain.Pedido;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.mail.SimpleMailMessage;
 
-import javax.mail.internet.MimeMessage;
+import com.nelioalves.cursomc.domain.Pedido;
 
 public interface EmailService {
 

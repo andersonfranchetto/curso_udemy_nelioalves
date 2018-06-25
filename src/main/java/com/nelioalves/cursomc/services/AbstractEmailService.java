@@ -1,7 +1,11 @@
 package com.nelioalves.cursomc.services;
 
-import com.nelioalves.cursomc.domain.Pedido;
-import com.nelioalves.cursomc.services.interfaces.EmailService;
+import java.util.Date;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
+import com.nelioalves.cursomc.services.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -10,20 +14,18 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import java.util.Date;
+import com.nelioalves.cursomc.domain.Pedido;
 
-public abstract class AbstractEmailService implements EmailService{
+public abstract class AbstractEmailService implements EmailService {
 
     @Value("${default.sender}")
     private String sender;
 
     @Autowired
-    TemplateEngine engine;
+    private TemplateEngine templateEngine;
 
     @Autowired
-    JavaMailSender mailsender;
+    private JavaMailSender javaMailSender;
 
     @Override
     public void sendOrderConfirmationEmail(Pedido pedido){
@@ -43,20 +45,21 @@ public abstract class AbstractEmailService implements EmailService{
     protected String htmlFromTemplatePedido(Pedido pedido){
         Context context = new Context();
         context.setVariable("pedido", pedido);
-        return engine.process("email/confirmacaoPedido", context);
+        return templateEngine.process("email/confirmacaoPedido", context);
     }
 
     @Override
     public void sendOrderConfirmationHtmlEmail(Pedido pedido){
         try{
             sendHtmlMail(prepareMimeMessageFromPedido(pedido));
-        }catch (MessagingException m){
+        }catch (MessagingException e){
+            System.out.println("Exception, HtmlEmail: " + e.getMessage());
             sendOrderConfirmationEmail(pedido);
         }
     }
 
     protected MimeMessage prepareMimeMessageFromPedido(Pedido pedido) throws MessagingException {
-        MimeMessage mimeMessage = mailsender.createMimeMessage();
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
         helper.setTo(pedido.getCliente().getEmail());
         helper.setFrom(sender);

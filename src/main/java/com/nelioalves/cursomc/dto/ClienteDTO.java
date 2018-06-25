@@ -27,6 +27,8 @@ public class ClienteDTO {
 
     private String cpfOuCnpj;
     private Integer tipo;
+    @NotEmpty(message = "Preenchimento obrigatório")
+    private String senha;
 
     private List<Endereco> enderecos = new ArrayList<>();
     private Set<String> telefones = new HashSet<>();
@@ -41,6 +43,7 @@ public class ClienteDTO {
         this.tipo = (cliente.getTipoCliente()==null) ? null : cliente.getTipoCliente();
         this.enderecos = cliente.getEnderecos();
         this.telefones = cliente.getTelefones();
+        this.senha = cliente.getSenha();
     }
 
     public Integer getId() {
@@ -97,5 +100,13 @@ public class ClienteDTO {
 
     public void setTelefones(Set<String> telefones) {
         this.telefones = telefones;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }

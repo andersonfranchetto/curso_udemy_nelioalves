@@ -7,6 +7,7 @@ public enum PerfilCliente {
 
     private int codigo;
     private String descricao;
+
     private PerfilCliente(int codigo, String descricao){
         this.codigo=codigo;
         this.descricao=descricao;

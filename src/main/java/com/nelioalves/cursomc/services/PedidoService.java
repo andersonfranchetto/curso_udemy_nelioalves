@@ -5,10 +5,17 @@ import com.nelioalves.cursomc.domain.PagamentoComBoleto;
 import com.nelioalves.cursomc.domain.Pedido;
 import com.nelioalves.cursomc.domain.enums.EstadoPagamento;
 import com.nelioalves.cursomc.repositories.PedidoRepository;
+import com.nelioalves.cursomc.security.domain.User;
+import com.nelioalves.cursomc.security.exceptions.AuthorizationException;
+import com.nelioalves.cursomc.security.services.UserService;
 import com.nelioalves.cursomc.services.exceptions.ObjectNotFoundException;
 import com.nelioalves.cursomc.services.interfaces.EmailService;
+import com.nelioalves.cursomc.services.validators.HasRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -85,5 +92,13 @@ public class PedidoService {
         }
 
         return pedido;
+    }
+
+    public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+        if(UserService.authenticated() == null)
+            throw new AuthorizationException("Acesso negado.");
+
+        PageRequest pageRequest = new PageRequest(page, linesPerPage, Sort.Direction.valueOf(direction),orderBy);
+        return repository.findByCliente(clienteService.find(UserService.authenticated().getId()), pageRequest);
     }
 }

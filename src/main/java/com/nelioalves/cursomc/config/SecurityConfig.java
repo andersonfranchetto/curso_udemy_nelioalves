@@ -1,6 +1,7 @@
 package com.nelioalves.cursomc.config;
 
 import com.nelioalves.cursomc.security.JWTAuthenticationFilter;
+import com.nelioalves.cursomc.security.JWTAuthorizationFilter;
 import com.nelioalves.cursomc.security.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +38,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     public static final String[] PUBLIC_MATCHERS_GET = {
       "/produtos/**",
       "/categorias/**",
-      "/pedidos/**",
       "/clientes/**"
     };
 
@@ -61,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .anyRequest().authenticated();
 
         http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+        http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, uds));
 
         http.sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

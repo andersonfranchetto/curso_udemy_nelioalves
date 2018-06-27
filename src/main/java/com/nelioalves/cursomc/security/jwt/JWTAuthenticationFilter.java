@@ -1,4 +1,4 @@
-package com.nelioalves.cursomc.security;
+package com.nelioalves.cursomc.security.jwt;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.nelioalves.cursomc.dto.CredenciaisDTO;
+import com.nelioalves.cursomc.security.domain.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

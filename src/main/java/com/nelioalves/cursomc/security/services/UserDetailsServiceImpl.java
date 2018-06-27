@@ -1,7 +1,7 @@
-package com.nelioalves.cursomc.services;
+package com.nelioalves.cursomc.security.services;
 
 import com.nelioalves.cursomc.domain.Cliente;
-import com.nelioalves.cursomc.security.User;
+import com.nelioalves.cursomc.security.domain.User;
 import com.nelioalves.cursomc.repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

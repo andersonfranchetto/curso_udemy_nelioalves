@@ -1,8 +1,8 @@
 package com.nelioalves.cursomc.config;
 
-import com.nelioalves.cursomc.security.JWTAuthenticationFilter;
-import com.nelioalves.cursomc.security.JWTAuthorizationFilter;
-import com.nelioalves.cursomc.security.JWTUtil;
+import com.nelioalves.cursomc.security.jwt.JWTAuthenticationFilter;
+import com.nelioalves.cursomc.security.jwt.JWTAuthorizationFilter;
+import com.nelioalves.cursomc.security.jwt.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

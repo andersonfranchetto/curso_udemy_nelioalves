@@ -1,4 +1,4 @@
-package com.nelioalves.cursomc.security;
+package com.nelioalves.cursomc.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

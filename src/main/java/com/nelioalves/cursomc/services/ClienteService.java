@@ -2,11 +2,16 @@ package com.nelioalves.cursomc.services;
 
 import com.nelioalves.cursomc.domain.Cliente;
 import com.nelioalves.cursomc.domain.Endereco;
+import com.nelioalves.cursomc.domain.enums.PerfilCliente;
 import com.nelioalves.cursomc.domain.enums.TipoCliente;
 import com.nelioalves.cursomc.dto.ClienteDTO;
 import com.nelioalves.cursomc.repositories.ClienteRepository;
+import com.nelioalves.cursomc.security.domain.User;
+import com.nelioalves.cursomc.security.exceptions.AuthorizationException;
+import com.nelioalves.cursomc.security.services.UserService;
 import com.nelioalves.cursomc.services.exceptions.DataIntegrityException;
 import com.nelioalves.cursomc.services.exceptions.ObjectNotFoundException;
+import com.nelioalves.cursomc.services.validators.HasRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -30,6 +35,10 @@ public class ClienteService {
     EnderecoService enderecoService;
 
     public Cliente find(Integer id){
+
+        if(HasRole.hasRoleUser(id))
+            throw new AuthorizationException("Acesso negado.");
+
         Cliente cliente = repository.findOne(id);
         if(cliente == null){
             throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id

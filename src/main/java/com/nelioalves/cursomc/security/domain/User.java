@@ -1,4 +1,4 @@
-package com.nelioalves.cursomc.security;
+package com.nelioalves.cursomc.security.domain;
 
 import com.nelioalves.cursomc.domain.enums.PerfilCliente;
 import org.springframework.security.core.GrantedAuthority;
@@ -62,5 +62,9 @@ public class User implements UserDetails{
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public boolean hasRole(PerfilCliente perfilCliente){
+        return getAuthorities().contains(new SimpleGrantedAuthority(perfilCliente.getDescricao()));
     }
 }

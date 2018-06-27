@@ -9,6 +9,7 @@ import com.nelioalves.cursomc.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.nelioalves.cursomc.domain.Categoria;
@@ -30,6 +31,7 @@ public class CategoriaResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO categoriaDTO){
 		Categoria categoria = service.fromDTO(categoriaDTO);
 		categoria = service.insert(categoria);
@@ -38,6 +40,7 @@ public class CategoriaResource {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Void> update(@Valid @PathVariable Integer id, @RequestBody CategoriaDTO categoriaDTO){
 		Categoria categoria = service.fromDTO(categoriaDTO);
 		categoria.setId(id);
@@ -46,6 +49,7 @@ public class CategoriaResource {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		service.delete(id);
 		return ResponseEntity.noContent().build();

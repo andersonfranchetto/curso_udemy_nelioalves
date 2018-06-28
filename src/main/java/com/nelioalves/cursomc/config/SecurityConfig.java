@@ -23,7 +23,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     UserDetailsService uds;
@@ -32,20 +32,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     JWTUtil jwtUtil;
 
     //LISTA ENDPOINTS ACESSO TOTAL SEM AUTENTICAO
-    public static final String[] PUBLIC_MATCHERS = {
-      "/h2-console/**"
-    };
+    public static final String[] PUBLIC_MATCHERS = {"/h2-console/**"};
 
     //LISTA ENDPOINTS SOMENTE LEITURA SEM AUTENTICACAO
-    public static final String[] PUBLIC_MATCHERS_GET = {
-      "/produtos/**",
-      "/categorias/**"
-    };
+    public static final String[] PUBLIC_MATCHERS_GET = {"/produtos/**", "/categorias/**"};
 
     //LISTA ENDPOINTS SOMENTE CADASTRO SEM AUTENTICACAO
-    public static final String[] PUBLIC_MATCHERS_POST = {
-            "/clientes/**"
-    };
+    public static final String[] PUBLIC_MATCHERS_POST = {"/clientes/**", "/auth/forgot/**"};
 
     @Value("${spring.profiles.active}")
     private String perfilAtivo;
@@ -58,20 +51,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         }
 
         http.cors()
-            .and()
-            .csrf().disable();
+                .and()
+                .csrf().disable();
 
         http.authorizeRequests()
-            .antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
-            .antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
-            .antMatchers(PUBLIC_MATCHERS).permitAll()
-            .anyRequest().authenticated();
+                .antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
+                .antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
+                .antMatchers(PUBLIC_MATCHERS).permitAll()
+                .anyRequest().authenticated();
 
         http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
         http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, uds));
 
-        http.sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -79,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource(){
+    CorsConfigurationSource corsConfigurationSource() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
         return source;

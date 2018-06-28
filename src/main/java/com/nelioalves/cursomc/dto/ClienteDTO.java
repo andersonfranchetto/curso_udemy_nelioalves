@@ -8,13 +8,16 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Column;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @ClienteValidator
-public class ClienteDTO {
+public class ClienteDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Integer id;
     @NotEmpty(message = "Preenchimento obrigatório")

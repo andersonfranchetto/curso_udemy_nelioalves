@@ -85,7 +85,7 @@ public class ClienteService {
         return repository.findByEmail(email);
     }
 
-    public Cliente merge(Cliente cliente){
+    private Cliente merge(Cliente cliente){
         Cliente newCliente = repository.save(cliente);
         for(Endereco newEndereco : cliente.getEnderecos()){
             newEndereco.setCliente(cliente);

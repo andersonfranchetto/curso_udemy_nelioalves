@@ -20,6 +20,7 @@ public class ClienteValidation implements ConstraintValidator<ClienteValidator, 
 
     @Autowired
     private HttpServletRequest request;
+
     @Autowired
     private ClienteService service;
 

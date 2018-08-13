@@ -50,5 +50,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             FilterChain chain,
                                             Authentication authentication) throws IOException, ServletException {
         response.addHeader("Authorization", "Bearer " + jwtUtil.generateToken(((User) authentication.getPrincipal()).getUsername()));
+        response.addHeader("access-control-expose-headers", "Authorization");
     }
 }

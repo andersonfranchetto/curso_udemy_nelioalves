@@ -81,6 +81,7 @@ public class PedidoService {
             item.setPreco(item.getProduto().getPreco());
             item.setPedido(pedido);
         };
+
         itemPedidoService.insert(pedido.getItens());
 
         switch (perfilAtivo){

@@ -3,9 +3,6 @@ package com.nelioalves.cursomc.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nelioalves.cursomc.domain.enums.PerfilCliente;
 import com.nelioalves.cursomc.domain.enums.TipoCliente;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -46,6 +43,8 @@ public class Cliente implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos = new ArrayList<>();
+
+    private String imageUrl;
 
     public Cliente(){
         addPerfil(PerfilCliente.CLIENTE);
@@ -131,6 +130,14 @@ public class Cliente implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Set<PerfilCliente> getPerfis() {

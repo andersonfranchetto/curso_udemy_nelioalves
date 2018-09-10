@@ -84,7 +84,7 @@ public class ClienteService {
     public Cliente getByEmail(String email) {
         User user = UserService.authenticated();
         if(user ==  null || !user.hasRole(PerfilCliente.ADMIN) && !email.equals(user.getUsername())) {
-            throw new AuthorizationException("Acesso negado");
+            throw new AuthorizationException("Access Denied");
         }
 
         Cliente cliente = this.findByEmail(email);
